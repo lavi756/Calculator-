@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en"> 
+ <head> 
+  <meta charset="UTF-8"> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <title>Financial Calculator</title> 
+  <link rel="stylesheet" href="styles.css"> 
+ <style type="text/css" id="dcoder_stylesheet">body {
+    font-family: Arial, sans-serif;
+    background: #f5f5f5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.calculator {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    width: 300px;
+}
+
+.selector, .calculator-forms {
+    margin-bottom: 15px;
+}
+
+.selector button, .calculator-forms button {
+    padding: 10px;
+    margin: 5px;
+    border: none;
+    border-radius: 5px;
+    background-color: #4CAF50;
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+input[type="number"] {
+    width: calc(100% - 22px);
+    padding: 10px;
+    margin: 5px 0;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+}
+
+h2 {
+    margin: 20px 0 10px;
+}
+
+p {
+    background: #4CAF50;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    margin: 20px 0 0;
+    display: none;
+}</style></head> 
+ <body> 
+  <div class="calculator"> 
+   <h1>Financial Calculator</h1> 
+   <div class="selector"> <button id="simple">Simple Interest</button> <button id="compound">Compound Interest</button> <button id="emi">Loan EMI</button> 
+   </div> 
+   <div class="calculator-forms"> <!-- Simple Interest Form --> 
+    <div id="simple-form"> 
+     <h2>Simple Interest</h2> 
+     <input type="number" id="si-principal" placeholder="Principal Amount"> 
+     <input type="number" id="si-rate" placeholder="Rate"> 
+     <input type="number" id="si-time" placeholder="Time (years)"> <button onclick="calculateSimpleInterest()">Calculate</button> 
+     <p id="si-result"></p> 
+    </div> <!-- Compound Interest Form --> 
+    <div id="compound-form"> 
+     <h2>Compound Interest</h2> 
+     <input type="number" id="ci-principal" placeholder="Principal Amount"> 
+     <input type="number" id="ci-rate" placeholder="Rate"> 
+     <input type="number" id="ci-time" placeholder="Time (years)"> 
+     <input type="number" id="ci-n" placeholder="Compounds per Year"> <button onclick="calculateCompoundInterest()">Calculate</button> 
+     <p id="ci-result"></p> 
+    </div> <!-- EMI Form --> 
+    <div id="emi-form"> 
+     <h2>Loan EMI</h2> 
+     <input type="number" id="emi-principal" placeholder="Loan Amount"> 
+     <input type="number" id="emi-rate" placeholder="Annual Rate"> 
+     <input type="number" id="emi-tenure" placeholder="Tenure (months)"> <button onclick="calculateEMI()">Calculate</button> 
+     <p id="emi-result"></p> 
+    </div> 
+   </div> 
+  </div> 
+  <script src="script.js"></script> 
+ 
+<script type="text/javascript" id="dcoder_script">function calculateSimpleInterest() {
+    const principal = parseFloat(document.getElementById('si-principal').value);
+    const rate = parseFloat(document.getElementById('si-rate').value);
+    const time = parseFloat(document.getElementById('si-time').value);
+
+    if (isNaN(principal) || isNaN(rate) || isNaN(time)) {
+        alert('Please enter valid numbers for the fields!');
+        return;
+    }
+
+    const simpleInterest = (principal * rate * time) / 100;
+    document.getElementById('si-result').innerText = `Simple Interest: $${simpleInterest.toFixed(2)}`;
+    document.getElementById('si-result').style.display = 'block';
+}
+
+function calculateCompoundInterest() {
+    const principal = parseFloat(document.getElementById('ci-principal').value);
+    const rate = parseFloat(document.getElementById('ci-rate').value) / 100;
+    const time = parseFloat(document.getElementById('ci-time').value);
+    const n = parseFloat(document.getElementById('ci-n').value);
+
+    if (isNaN(principal) || isNaN(rate) || isNaN(time) || isNaN(n)) {
+        alert('Please enter valid numbers for the fields!');
+        return;
+    }
+
+    const compoundInterest = principal * Math.pow((1 + rate / n), n * time) - principal;
+    document.getElementById('ci-result').innerText = `Compound Interest: $${compoundInterest.toFixed(2)}`;
+    document.getElementById('ci-result').style.display = 'block';
+}
+
+function calculateEMI() {
+    const principal = parseFloat(document.getElementById('emi-principal').value);
+    const annualRate = parseFloat(document.getElementById('emi-rate').value);
+    const tenure = parseFloat(document.getElementById('emi-tenure').value);
+
+    if (isNaN(principal) || isNaN(annualRate) || isNaN(tenure)) {
+        alert('Please enter valid numbers for the fields!');
+        return;
+    }
+
+    const monthlyRate = annualRate / (12 * 100);
+    const emi = (principal * monthlyRate * Math.pow(1 + monthlyRate, tenure)) / (Math.pow(1 + monthlyRate, tenure) - 1);
+    document.getElementById('emi-result').innerText = `EMI: $${emi.toFixed(2)}`;
+    document.getElementById('emi-result').style.display = 'block';
+}
+
+// Toggle Display of the Forms
+document.getElementById('simple').onclick = () => {
+    document.getElementById('simple-form').style.display = 'block';
+    document.getElementById('compound-form').style.display = 'none';
+    document.getElementById('emi-form').style.display = 'none';
+};
+
+document.getElementById('compound').onclick = () => {
+    document.getElementById('simple-form').style.display = 'none';
+    document.getElementById('compound-form').style.display = 'block';
+    document.getElementById('emi-form').style.display = 'none';
+};
+
+document.getElementById('emi').onclick = () => {
+    document.getElementById('simple-form').style.display = 'none';
+    document.getElementById('compound-form').style.display = 'none';
+    document.getElementById('emi-form').style.display = 'block';
+};</script></body></html>
