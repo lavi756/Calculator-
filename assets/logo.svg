@@ -1,0 +1,9 @@
+<svg width="48" height="48" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">Lavi Logo</title>
+  <desc id="desc">Punjab-inspired circular logo with stylized letters l and s</desc>
+  <!-- Saffron circle -->
+  <circle cx="24" cy="24" r="22" fill="#ff9933" stroke="#0078ff" stroke-width="2" />
+  <!-- Blue stylised letters -->
+  <path d="M18 15 v18" stroke="#0078ff" stroke-width="4" stroke-linecap="round" />
+  <path d="M30 15 c6 0 6 6 0 6 s-6 6 0 6 c6 0 6 6 0 6" fill="none" stroke="#0078ff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+</svg>
